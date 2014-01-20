@@ -1,0 +1,27 @@
+
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Geolocation API(getCurrentPosition) Sample</title>
+<script type="text/javascript">
+
+var txt1 = "赤は英語で<strong>red</strong>です";
+var txt2 = "青は英語で<strong>blue</strong>です";
+var txt3 = "黄色は英語で<strong>yellow</strong>です";
+ 
+function ChangeTxt(txt) {
+    document.getElementById("text").innerHTML=txt;
+}
+
+</script>
+
+</head>
+<body>
+<div id="text">ここの文章を変える</div>
+<ul>
+    <li><a href="javascript:void(0)" onclick="ChangeTxt(txt1); return false;">赤</a></li>
+    <li><a href="javascript:void(0)" onclick="ChangeTxt(txt2); return false;">青</a></li>
+    <li><a href="javascript:void(0)" onclick="ChangeTxt(txt3); return false;">黄色</a></li>
+</ul></body>
+</html>

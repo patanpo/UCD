@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset=UTF-8>
+        <title>JavaScript で HTML5 Audio を使ってサウンド再生02</title>
+        
+        <style>
+        
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            box-sizing: border-box;
+            font-family: "Meiryo", Arial, Helvetica, sans-serif;
+            line-height: 1.5em;
+        }
+        
+        body {
+            font-size: 12px;
+        }
+        
+        #contents {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -o-box;
+            display: box;
+        }
+        
+        .circle {
+            margin: 10px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+            color: white;
+            
+            font-size: 20px;
+            text-align: center;
+            line-height: 100px;
+            box-shadow: 2px 2px 4px 0px #444;
+            cursor: pointer;
+            
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+        
+        .circle:active { box-shadow: inset 2px 2px 4px 0px #000; }
+        .circle:nth-of-type(1) { background-color: red; }
+        .circle:nth-of-type(2) { background-color: green; }
+        .circle:nth-of-type(3) { background-color: blue; }
+        
+        </style>
+
+        
+        <script>
+        //javascriptここから---------------------------------------------------------------------------------------    
+            var $id         = function(id)  { return document.getElementById(id); };
+            var $classAll   = function(c)   { return document.getElementsByClassName(c); };
+            
+            // ブラウザ対応拡張子取得
+            var AUDIO_EXT = (function(){
+                var ext     = "";
+                var audio   = new Audio();
+                
+                if      (audio.canPlayType("audio/ogg") == 'maybe') { ext="ogg"; }
+                else if (audio.canPlayType("audio/mp3") == 'maybe') { ext="mp3"; }
+                else if (audio.canPlayType("audio/wav") == 'maybe') { ext="wav"; }
+                
+                return ext;
+            })();
+            
+            // あらかじめ読み込んでおく
+            var AUDIO_LIST = {
+                "se00": new Audio("se/se00." + AUDIO_EXT),
+                "se01": new Audio("se/se01." + AUDIO_EXT),
+                "se02": new Audio("se/se02." + AUDIO_EXT),
+            };
+            
+            // 初期化
+            window.onload = function() {
+                // Circle 要素取得
+                var eCircleList = $classAll("circle");
+                
+                for (var i=0,len=eCircleList.length; i<len; ++i) {
+                    var eCircle = eCircleList[i];
+                    // クリックイベント登録
+                    eCircle.addEventListener("click", function(){
+                        var data = this.getAttribute("data");
+                        // サウンド再生
+                        AUDIO_LIST[data].play();
+                    }, false);
+                }
+            };
+            
+            
+            function volumUp(){
+                var volum = AUDIO_LIST.se00.volume;
+                volum = volum+0.1;
+                //音量を0-1で設定する。
+                AUDIO_LIST.se00.volume=volum.toFixed(2);//小数点二桁にして代入
+                document.getElementById("volum").innerHTML=volum.toFixed(2);
+            }
+            function volumDown(){
+                var volum = AUDIO_LIST.se00.volume;
+                if(volum>0){
+                    volum = volum-0.1;
+                }else{
+                    volum==0;
+                }
+                //音量を0-1で設定する。
+                AUDIO_LIST.se00.volume=volum.toFixed(2);
+                
+                document.getElementById("volum").innerHTML=volum.toFixed(2);
+                
+            }
+            
+
+        //javascriptここまで---------------------------------------------------------------------------------------
+        </script>
+    </head>
+    
+    <body>
+        <header id="header">
+            <h1>JavaScript で HTML5 Audio を使ってサウンド再生</h1>
+        </header>
+        
+        <div id="contents">
+            <div class="circle" data="se00">SE 00</div>
+            <div class="circle" data="se01">SE 01</div>
+            <div class="circle" data="se02">SE 02</div>
+        </div>
+        
+        <button onclick="volumUp()">音量大</button>
+        <button onclick="volumDown()">音量小</button>
+        
+        <br>
+        <br>
+        <br>
+        <div id="volum">音量:</div>
+    </body>
+</html>
